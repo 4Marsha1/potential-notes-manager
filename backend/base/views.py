@@ -20,6 +20,8 @@ def createNote(request):
     serializer = NoteSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
+        notes = Note.objects.all()
+        serializer = NoteSerializer(notes, many=True)
         return Response(serializer.data) 
     return Response('Failed to create note!')
 
@@ -29,6 +31,8 @@ def updateNote(request,pk):
     serializer = NoteSerializer(instance=note,data=request.data, many=False)
     if serializer.is_valid():
         serializer.save()
+        notes = Note.objects.all()
+        serializer = NoteSerializer(notes, many=True)
         return Response(serializer.data) 
     return Response('Failed to create note!')
 
